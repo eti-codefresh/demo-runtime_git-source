@@ -48,10 +48,10 @@ spec:
           - name: IMAGE_NAME
           - name: TAG
           - name: GIT_REVISION
-            value: 'mas'         # use default value if this parameter is not provided
+            default: 'master'         # use default value if this parameter is not provided
           - name: GIT_BRANCH
           - name: GIT_COMMIT_URL
-            value: ''
+            default: ''
           - name: GIT_COMMIT_MESSAGE
             default: 'commit some test'
       steps:
