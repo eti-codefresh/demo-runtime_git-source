@@ -68,7 +68,7 @@ spec:
             - dest: spec.arguments.parameters.3.value
               src:
                 dependencyName: github-a5b69ce6-426e-4ca5-8b18-1cc6d8ad8aba
-                dataTemplate: '{{ "main" }}' 
+                dataTemplate: main 
             - dest: spec.arguments.parameters.4.value
               src:
                 dependencyName: github-a5b69ce6-426e-4ca5-8b18-1cc6d8ad8aba
