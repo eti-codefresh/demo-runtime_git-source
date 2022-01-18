@@ -63,7 +63,7 @@ spec:
                 - name: REPO
                   value: '{{ inputs.parameters.REPO }}'
                 - name: REVISION
-                  value: '{{ inputs.parameters.GIT_REVISION }}'
+                  value: master
                 - name: IMAGE_NAME
                   value: '{{ inputs.parameters.IMAGE_NAME }}'
                   # Create git secret token and apply it to your cluster under the runtime namespace
