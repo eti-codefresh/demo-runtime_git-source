@@ -23,7 +23,7 @@ spec:
     inputs:
       parameters:
       - name: message
-        value: hello world
+        value: hello
     metadata: {}
     name: whalesay
     outputs: {}
