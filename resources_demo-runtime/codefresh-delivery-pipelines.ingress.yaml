@@ -1,17 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: codefresh-delivery-pipelines2
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  name: codefresh-delivery-pipelines
 spec:
   rules:
     - http:
         paths:
-          - path: /webhooks/test
+          - path: /webhooks/test2
             backend:
               service:
-                name: test-eventsource-svc
+                name: test2-eventsource-svc
                 port:
                   number: 80
             pathType: ImplementationSpecific

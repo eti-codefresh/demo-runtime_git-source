@@ -1,4 +1,4 @@
-# This Workflow Template is used to create your first CI pipeline in CSDP .
+# This Workflow Template is used to create your first CI pipeline in CSDP
 # This CI pipeline builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
