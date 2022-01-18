@@ -1,0 +1,79 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: test
+spec:
+  template:
+    serviceAccountName: argo-server
+  eventBusName: codefresh-eventbus
+  dependencies:
+    - name: github-a63bd294-913a-4dac-85d7-74a1903827af
+      eventName: github-a63bd294-913a-4dac-85d7-74a1903827af
+      eventSourceName: test
+      filters:
+        data:
+          - path: body.X-GitHub-Event
+            value:
+              - push
+            type: string
+          - path: body.ref
+            template: '{{ (split "/" .Input)._1 }}'
+            value:
+              - heads
+            type: string
+  triggers:
+    - template:
+        name: push
+        conditions: github-a63bd294-913a-4dac-85d7-74a1903827af
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: WorkflowTemplate
+              metadata:
+                generateName: test-push-
+              spec:
+                arguments:
+                  parameters:
+                    - name: REPO
+                      value: ''
+                    - name: IMAGE_NAME
+                      value: ''
+                    - name: TAG
+                      value: ''
+                    - name: GIT_REVISION
+                      value: ''
+                    - name: GIT_BRANCH
+                      value: ''
+                    - name: GIT_COMMIT_URL
+                      value: ''
+                    - name: GIT_COMMIT_MESSAGE
+                      value: ''
+                workflowTemplateRef:
+                  name: ci-simple
+          parameters:
+            - dest: spec.arguments.parameters.0.value
+              src:
+                dependencyName: github-a63bd294-913a-4dac-85d7-74a1903827af
+                dataTemplate: https://github.com/codefresh-io/cli/
+            - dest: spec.arguments.parameters.1.value
+              src:
+                dependencyName: github-a63bd294-913a-4dac-85d7-74a1903827af
+                dataTemplate: quay.io/eti_zaguri/test
+            - dest: spec.arguments.parameters.2.value
+              src:
+                dependencyName: github-a63bd294-913a-4dac-85d7-74a1903827af
+                dataTemplate: 1.4.0
+            - dest: spec.arguments.parameters.3.value
+              src:
+                dependencyName: github-a63bd294-913a-4dac-85d7-74a1903827af
+                dataTemplate: master
+            - dest: spec.arguments.parameters.4.value
+              src:
+                dependencyName: github-a63bd294-913a-4dac-85d7-74a1903827af
+                dataTemplate: main
+            - dest: spec.arguments.parameters.6.value
+              src:
+                dependencyName: github-a63bd294-913a-4dac-85d7-74a1903827af
+                dataTemplate: test
