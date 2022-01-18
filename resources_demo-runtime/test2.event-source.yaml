@@ -20,7 +20,7 @@ spec:
       webhook:
         port: '80'
         method: POST
-        endpoint: /webhooks/github/github-d7f9aa54-61d9-46d4-8cc9-421743363f21
+        endpoint: /webhooks/test2/github-d7f9aa54-61d9-46d4-8cc9-421743363f21
         url: https://eti.pipeline-team.cf-cd.com
       active: true
       insecure: false
