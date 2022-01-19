@@ -37,7 +37,7 @@ spec:
                 arguments:
                   parameters:
                     - name: REPO
-                      value: https://github.com/codefresh-io/cli
+                      value: https://github.com/codefresh-io/cli-v2
                     - name: IMAGE_NAME
                       value: 'quay.io/eti_zaguri/test'
 #                     - name: TAG
