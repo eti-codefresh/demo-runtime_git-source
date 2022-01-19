@@ -37,7 +37,7 @@ spec:
                 arguments:
                   parameters:
                     - name: REPO
-                      value: repo
+                      value: https://github.com/codefresh-io/cli
                     - name: IMAGE_NAME
                       value: ''
                     - name: TAG
