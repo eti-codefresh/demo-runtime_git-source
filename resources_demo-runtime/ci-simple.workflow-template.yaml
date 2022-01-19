@@ -139,7 +139,7 @@ spec:
               - name: IMAGE
                 value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
             template: test
-      # Test template  
+    # Test template  
     - name: test
       inputs:
         parameters:   

@@ -6,25 +6,11 @@ spec:
   template:
     serviceAccountName: argo-server
   eventBusName: codefresh-eventbus
-  dependencies:
-    - name: github-1a1d049e-b318-4dd4-b67c-2ab408d62035
-      eventName: github-1a1d049e-b318-4dd4-b67c-2ab408d62035
-      eventSourceName: eti123
-      filters:
-        data:
-          - path: body.X-GitHub-Event
-            value:
-              - push
-            type: string
-          - path: body.ref
-            template: '{{ (split "/" .Input)._1 }}'
-            value:
-              - heads
-            type: string
+  dependencies: []
   triggers:
     - template:
         name: push
-        conditions: github-1a1d049e-b318-4dd4-b67c-2ab408d62035
+        conditions: ''
         argoWorkflow:
           operation: submit
           source:
@@ -35,11 +21,7 @@ spec:
                 generateName: eti123-push-
               spec:
                 arguments:
-                  parameters:
-                    - name: REPO
-                      value: https://github.com/codefresh-io/cli
-                    - name: IMAGE_NAME
-                      value: quay.io/eti_zaguri/test
+                  parameters: []
                 workflowTemplateRef:
                   name: ci-simple
           parameters: []
