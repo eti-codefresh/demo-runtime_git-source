@@ -90,6 +90,7 @@ spec:
                   value: github-token
                 - name: DOCKERFILE
                   value: '{{ inputs.parameters.DOCKERFILE }}' 
+                  default: Dockerfile
                 - name: CONTEXT
                   value: . 
 #                 - name: TAG
