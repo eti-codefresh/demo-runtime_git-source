@@ -96,7 +96,7 @@ spec:
                 - name: CONTEXT
                   value: . 
                 - name: TAG
-                  value: '{{ workflow.parameters.TAG }}'
+                  value: '{{ inputs.parameters.TAG }}'
             templateRef:
               name: argo-hub.kaniko.0.0.1
               template: build
