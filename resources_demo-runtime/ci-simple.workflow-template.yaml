@@ -95,8 +95,8 @@ spec:
           #  https://codefresh.io/argohub/workflow-template/codefresh-csdp
           - name: report-image-info
             templateRef:
-              name: argo-hub.kaniko.0.0.1
-              template: build
+              name: argo-hub.codefresh-csdp.0.0.6
+              template: report-image-info
             arguments:
               parameters:
                 - name: IMAGE
