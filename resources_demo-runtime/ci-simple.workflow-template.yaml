@@ -86,8 +86,8 @@ spec:
                   value: '{{ inputs.parameters.GIT_REVISION }}'
                 - name: IMAGE_NAME
                   value: '{{ inputs.parameters.IMAGE_NAME }}'
-#                 - name: GIT_TOKEN_SECRET
-#                   value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                - name: GIT_TOKEN_SECRET
+                  value: github-token
                 - name: DOCKERFILE
                   value: '{{ inputs.parameters.DOCKERFILE }}' 
                 - name: CONTEXT
