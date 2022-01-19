@@ -18,7 +18,8 @@ spec:
       - name: GIT_BRANCH
       - name: GIT_COMMIT_URL       
       - name: GIT_COMMIT_MESSAGE
-      - name: DOCKERFILE
+#       - name: DOCKERFILE
+#         default: Dockerfile
       - name: GIT_TOKEN_SECRET
 
 
