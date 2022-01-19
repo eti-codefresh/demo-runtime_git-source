@@ -94,9 +94,9 @@ spec:
                 - name: DOCKERFILE
                   value: '{{ inputs.parameters.DOCKERFILE }}' 
                 - name: CONTEXT
-                  value: '{{ inputs.parameters.DOCKERFILE }}'  
+                  value: '{{ inputs.parameters.CONTEXT }}'  
                 - name: TAG
-                  value: '{{ inputs.parameters.CONTEXT }}'
+                  value: '{{ inputs.parameters.TAG }}'
             templateRef:
               name: argo-hub.kaniko.0.0.1
               template: build
