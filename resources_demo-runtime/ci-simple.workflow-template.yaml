@@ -17,7 +17,6 @@ spec:
     #   - name: GIT_BRANCH
     #   - name: GIT_COMMIT_URL
     #   - name: GIT_COMMIT_MESSAGE
-    #   - name: GIT_COMMIT_MESSAGE
 
 
   # To use the build-docker-image step from the argo-hub.kaniko.0.0.1 template, you need to create a docker-registry secret
@@ -49,7 +48,7 @@ spec:
           - name: IMAGE_NAME
           - name: TAG
           - name: GIT_REVISION
-            value: 'master'         # use default value if this parameter is not provided
+            default: 'master'         # use default value if this parameter is not provided
           - name: GIT_BRANCH
           - name: GIT_COMMIT_URL
             default: ''
