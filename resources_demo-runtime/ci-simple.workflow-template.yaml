@@ -42,7 +42,7 @@ spec:
           - name: TAG
             default: latest
           - name: GIT_REVISION
-            default: master         # use default value if this parameter is not provided
+            default: main         # use default value if this parameter is not provided
           - name: GIT_BRANCH
             default: main
           - name: GIT_COMMIT_URL
