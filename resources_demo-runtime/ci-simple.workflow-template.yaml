@@ -88,9 +88,9 @@ spec:
                   value: '{{ inputs.parameters.IMAGE_NAME }}'
                 - name: GIT_TOKEN_SECRET
                   value: github-token
-                - name: DOCKERFILE
-                  value: '{{ inputs.parameters.DOCKERFILE }}' 
-                  default: Dockerfile
+#                 - name: DOCKERFILE
+#                   value: '{{ inputs.parameters.DOCKERFILE }}' 
+#                   default: Dockerfile
                 - name: CONTEXT
                   value: . 
 #                 - name: TAG
