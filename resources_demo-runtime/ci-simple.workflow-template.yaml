@@ -13,13 +13,13 @@ spec:
 #       - name: REPO
 #       - name: IMAGE_NAME
 #       - name: TAG
-#         default: 123
 #       - name: GIT_REVISION
 #       - name: GIT_BRANCH
 #       - name: GIT_COMMIT_URL       
 #       - name: GIT_COMMIT_MESSAGE
 #       - name: DOCKERFILE
 #       - name: GIT_TOKEN_SECRET
+#       - name: CONTEXT
 
 
   # To use the build-docker-image step from the argo-hub.kaniko.0.0.1 template, you need to create a docker-registry secret
@@ -73,8 +73,10 @@ spec:
           #   data:
           #     token: <github token base64 here>
           # Run kubectl -n <namespace> apply -f github.secret.yaml
-#           - name: GIT_TOKEN_SECRET
-#             default: github-token # the name of the git secret token you applied to your cluster
+          - name: GIT_TOKEN_SECRET
+            default: github-token # the name of the git secret token you applied to your cluster
+          - name: CONTEXT
+            default: .
       steps:
         # https://github.com/codefresh-io/argo-hub/blob/main/workflows/kaniko/versions/0.0.1/docs/build.md
         # https://codefresh.io/argohub/workflow-template/kaniko  
@@ -88,13 +90,13 @@ spec:
                 - name: IMAGE_NAME
                   value: '{{ inputs.parameters.IMAGE_NAME }}'
                 - name: GIT_TOKEN_SECRET
-                  value: github-token
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
                 - name: DOCKERFILE
                   value: '{{ inputs.parameters.DOCKERFILE }}' 
                 - name: CONTEXT
-                  value: . 
+                  value: '{{ inputs.parameters.DOCKERFILE }}'  
                 - name: TAG
-                  value: '{{ inputs.parameters.TAG }}'
+                  value: '{{ inputs.parameters.CONTEXT }}'
             templateRef:
               name: argo-hub.kaniko.0.0.1
               template: build
