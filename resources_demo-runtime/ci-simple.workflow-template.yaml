@@ -5,48 +5,48 @@ kind: WorkflowTemplate
 metadata:
   name: ci-simple
 spec:
-#   arguments:
-# #     List here all the arguments to pass as variables to the Workflow from the Sensor 
-# #     Use this syntax to pass them into the Workflow Templates: "{{workflow.parameters.REPO}}"
-# #     These are the arguments that are required for this CI pipeline:
-#     parameters:
-#       - name: REPO
-#       - name: IMAGE_NAME
-#       - name: TAG
-#       - name: GIT_REVISION
-#       - name: GIT_BRANCH
-#       - name: GIT_COMMIT_URL       
-#       - name: GIT_COMMIT_MESSAGE
-#       - name: DOCKERFILE
-#       - name: GIT_TOKEN_SECRET
-#       - name: CONTEXT
+  #   arguments:
+  # #     List here all the arguments to pass as variables to the Workflow from the Sensor 
+  # #     Use this syntax to pass them into the Workflow Templates: "{{workflow.parameters.REPO}}"
+  # #     These are the arguments that are required for this CI pipeline:
+  #     parameters:
+  #       - name: REPO
+  #       - name: IMAGE_NAME
+  #       - name: TAG
+  #       - name: GIT_REVISION
+  #       - name: GIT_BRANCH
+  #       - name: GIT_COMMIT_URL       
+  #       - name: GIT_COMMIT_MESSAGE
+  #       - name: DOCKERFILE
+  #       - name: GIT_TOKEN_SECRET
+  #       - name: CONTEXT
 
 
   # To use the build-docker-image step from the argo-hub.kaniko.0.0.1 template, you need to create a docker-registry secret
   # Use your docker credentials for the runtime namespace 
   # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
-  volumes:   
+  volumes:
     - name: docker-config
       secret:
         items:
-        - key: .dockerconfigjson
-          path: config.json
+          - key: .dockerconfigjson
+            path: config.json
         secretName: docker-registry # this is the name of the docker-registry secret you created 
   entrypoint: ci-steps
-  templates:      
+  templates:
     - name: ci-steps
       inputs:
         parameters:
           - name: REPO
           - name: IMAGE_NAME
           - name: TAG
-            default: latest 
+            default: latest
           - name: GIT_REVISION
             default: master         # use default value if this parameter is not provided
           - name: GIT_BRANCH
             default: main
           - name: GIT_COMMIT_URL
-            default: ''         
+            default: ''
           - name: GIT_COMMIT_MESSAGE
             default: ''
           - name: DOCKERFILE
@@ -68,82 +68,82 @@ spec:
           - name: CONTEXT
             default: .
       dag:
-          tasks:
-              # https://github.com/codefresh-io/argo-hub/blob/main/workflows/kaniko/versions/0.0.1/docs/build.md
-              # https://codefresh.io/argohub/workflow-template/kaniko 
-              - name: build-docker-image
-                templateRef:
-                    name: argo-hub.kaniko.0.0.1
-                    template: build
-                arguments:
-                    parameters:
-                        - name: REPO
-                          value: '{{ inputs.parameters.REPO }}'
-                        - name: REVISION
-                          value: '{{ inputs.parameters.GIT_REVISION }}'
-                        - name: IMAGE_NAME
-                          value: '{{ inputs.parameters.IMAGE_NAME }}'
-                        - name: GIT_TOKEN_SECRET
-                          value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
-                        - name: DOCKERFILE
-                          value: '{{ inputs.parameters.DOCKERFILE }}' 
-                        - name: CONTEXT
-                          value: '{{ inputs.parameters.CONTEXT }}'  
-                        - name: TAG
-                          value: '{{ inputs.parameters.TAG }}'
-              #  https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/0.0.6/docs/report-image-info.md
-              #  https://codefresh.io/argohub/workflow-template/codefresh-csdp
-              - name: report-image-info 
-                templateRef:
-                    name: argo-hub.kaniko.0.0.1
-                    template: build
-                arguments:
-                    parameters:
-                        - name: IMAGE
-                          value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
-                        - name: CF_API_KEY
-                          value: codefresh-token # this secret is created as part of the runtime installation 
-                        - name: GIT_REVISION
-                          value: '{{ inputs.parameters.GIT_REVISION }}'
-                        - name: GIT_BRANCH
-                          value: '{{ inputs.parameters.GIT_BRANCH }}'
-                        - name: GIT_COMMIT_URL
-                          value: '{{ inputs.parameters.GIT_COMMIT_URL }}'
-                        - name: GIT_COMMIT_MESSAGE
-                          value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
-                        # Create registry-creds secret and apply it to your cluster under the runtime namespace 
-                        # You can use also use other creds such gcr/aws; please look at the template inputs for more info  https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/0.0.6/docs/report-image-info.md
-                        # Note that the token uses base64 
-                        # https://kubernetes.io/docs/concepts/configuration/secret/ 
-                        # Create registry-creds.yaml with the following content:
-                        #   apiVersion: v1
-                        #   kind: Secret
-                        #   metadata:
-                        #     name: registry-creds
-                        #   type: Opaque
-                        #   data:
-                        #     username: <REGISTRY_USERNAME base64 here>
-                        #     password: <REGISTRY_PASSWORD base64 here>
-                        #     domain: <REGISTRY_DOMAIN base64 here> 
-                        # Run kubectl -n <namespace> apply -f <registry-creds name>.yaml
-                        - name: USERNAME
-                          value: dockerquay-creds  # the name of the registry-creds secret you created
-                        - name: PASSWORD
-                          value: dockerquay-creds
-                        - name: DOMAIN
-                          value: dockerquay-creds
-              - name: test-image
-                template: test
-                arguments:
-                    parameters:
-                        - name: IMAGE
-                          value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+        tasks:
+          # https://github.com/codefresh-io/argo-hub/blob/main/workflows/kaniko/versions/0.0.1/docs/build.md
+          # https://codefresh.io/argohub/workflow-template/kaniko 
+          - name: build-docker-image
+            templateRef:
+              name: argo-hub.kaniko.0.0.1
+              template: build
+            arguments:
+              parameters:
+                - name: REPO
+                  value: '{{ inputs.parameters.REPO }}'
+                - name: REVISION
+                  value: '{{ inputs.parameters.GIT_REVISION }}'
+                - name: IMAGE_NAME
+                  value: '{{ inputs.parameters.IMAGE_NAME }}'
+                - name: GIT_TOKEN_SECRET
+                  value: '{{ inputs.parameters.GIT_TOKEN_SECRET }}'
+                - name: DOCKERFILE
+                  value: '{{ inputs.parameters.DOCKERFILE }}'
+                - name: CONTEXT
+                  value: '{{ inputs.parameters.CONTEXT }}'
+                - name: TAG
+                  value: '{{ inputs.parameters.TAG }}'
+          #  https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/0.0.6/docs/report-image-info.md
+          #  https://codefresh.io/argohub/workflow-template/codefresh-csdp
+          - name: report-image-info
+            templateRef:
+              name: argo-hub.kaniko.0.0.1
+              template: build
+            arguments:
+              parameters:
+                - name: IMAGE
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+                - name: CF_API_KEY
+                  value: codefresh-token # this secret is created as part of the runtime installation 
+                - name: GIT_REVISION
+                  value: '{{ inputs.parameters.GIT_REVISION }}'
+                - name: GIT_BRANCH
+                  value: '{{ inputs.parameters.GIT_BRANCH }}'
+                - name: GIT_COMMIT_URL
+                  value: '{{ inputs.parameters.GIT_COMMIT_URL }}'
+                - name: GIT_COMMIT_MESSAGE
+                  value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
+                # Create registry-creds secret and apply it to your cluster under the runtime namespace 
+                # You can use also use other creds such gcr/aws; please look at the template inputs for more info  https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/0.0.6/docs/report-image-info.md
+                # Note that the token uses base64 
+                # https://kubernetes.io/docs/concepts/configuration/secret/ 
+                # Create registry-creds.yaml with the following content:
+                #   apiVersion: v1
+                #   kind: Secret
+                #   metadata:
+                #     name: registry-creds
+                #   type: Opaque
+                #   data:
+                #     username: <REGISTRY_USERNAME base64 here>
+                #     password: <REGISTRY_PASSWORD base64 here>
+                #     domain: <REGISTRY_DOMAIN base64 here> 
+                # Run kubectl -n <namespace> apply -f <registry-creds name>.yaml
+                - name: USERNAME
+                  value: dockerquay-creds  # the name of the registry-creds secret you created
+                - name: PASSWORD
+                  value: dockerquay-creds
+                - name: DOMAIN
+                  value: dockerquay-creds
+          - name: test-image
+            template: test
+            arguments:
+              parameters:
+                - name: IMAGE
+                  value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
 
     # Test template  
     - name: test
       inputs:
-        parameters:   
-        - name: IMAGE
+        parameters:
+          - name: IMAGE
       container:
         image: '{{ inputs.parameters.IMAGE }}'
         command: [sh, -c]
