@@ -49,7 +49,7 @@ spec:
                     - name: GIT_COMMIT_URL
                       value: ''
                     - name: GIT_COMMIT_MESSAGE
-                      value: ''
+                      value: null
                     - name: DOCKERFILE
                       value: ''
                     - name: GIT_TOKEN_SECRET
