@@ -58,8 +58,8 @@ spec:
             default: ''         
           - name: GIT_COMMIT_MESSAGE
             default: ''
-          - name: DOCKERFILE
-            default: Dockerfile
+#           - name: DOCKERFILE
+#             default: Dockerfile
           # Create git secret token and apply it to your cluster under the runtime namespace 
           # NOTE: The token should be in base64 format
           # https://kubernetes.io/docs/concepts/configuration/secret/ 
