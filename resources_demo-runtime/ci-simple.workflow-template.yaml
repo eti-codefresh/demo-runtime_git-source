@@ -5,20 +5,21 @@ kind: WorkflowTemplate
 metadata:
   name: ci-simple
 spec:
-#   arguments:
-    # List here all the arguments to pass as variables to the Workflow from the Sensor 
-    # Use this syntax to pass them into the Workflow Templates: "{{workflow.parameters.REPO}}"
-    # These are the arguments that are required for this CI pipeline:
-    # parameters:
-    #   - name: REPO
-    #   - name: IMAGE_NAME
-    #   - name: TAG
-    #   - name: GIT_REVISION
-    #   - name: GIT_BRANCH
-    #   - name: GIT_COMMIT_URL       
-    #   - name: GIT_COMMIT_MESSAGE
-    #   - name: DOCKERFILE
-    #   - name: GIT_TOKEN_SECRET
+  arguments:
+    List here all the arguments to pass as variables to the Workflow from the Sensor 
+    Use this syntax to pass them into the Workflow Templates: "{{workflow.parameters.REPO}}"
+    These are the arguments that are required for this CI pipeline:
+    parameters:
+      - name: REPO
+      - name: IMAGE_NAME
+      - name: TAG
+        default: 123
+      - name: GIT_REVISION
+      - name: GIT_BRANCH
+      - name: GIT_COMMIT_URL       
+      - name: GIT_COMMIT_MESSAGE
+      - name: DOCKERFILE
+      - name: GIT_TOKEN_SECRET
 
 
   # To use the build-docker-image step from the argo-hub.kaniko.0.0.1 template, you need to create a docker-registry secret
@@ -93,8 +94,8 @@ spec:
 #                   default: Dockerfile
                 - name: CONTEXT
                   value: . 
-#                 - name: TAG
-#                   value: '{{ inputs.parameters.TAG }}'
+                - name: TAG
+                  value: '{{ workflow.parameters.TAG }}'
             templateRef:
               name: argo-hub.kaniko.0.0.1
               template: build
