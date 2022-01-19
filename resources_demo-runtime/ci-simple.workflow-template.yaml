@@ -1,12 +1,12 @@
 # This Workflow Template is used to create your first CI pipeline in CSDP
-# This CI pipeline builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image 
+# This CI pipeline builds a docker image using Kaniko, uploads image metadata to CSDP, and tests the image
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
   name: ci-simple
 spec:
   #   arguments:
-  # #     List here all the arguments to pass as variables to the Workflow from the Sensor 
+  # #     List here all the arguments to pass as variables to the Workflow from the Sensor
   # #     Use this syntax to pass them into the Workflow Templates: "{{workflow.parameters.REPO}}"
   # #     These are the arguments that are required for this CI pipeline:
   #     parameters:
@@ -15,7 +15,7 @@ spec:
   #       - name: TAG
   #       - name: GIT_REVISION
   #       - name: GIT_BRANCH
-  #       - name: GIT_COMMIT_URL       
+  #       - name: GIT_COMMIT_URL
   #       - name: GIT_COMMIT_MESSAGE
   #       - name: DOCKERFILE
   #       - name: GIT_TOKEN_SECRET
@@ -23,7 +23,7 @@ spec:
 
 
   # To use the build-docker-image step from the argo-hub.kaniko.0.0.1 template, you need to create a docker-registry secret
-  # Use your docker credentials for the runtime namespace 
+  # Use your docker credentials for the runtime namespace
   # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
   volumes:
     - name: docker-config
@@ -31,7 +31,7 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: docker-registry # this is the name of the docker-registry secret you created 
+        secretName: docker-registry # this is the name of the docker-registry secret you created
   entrypoint: ci-steps
   templates:
     - name: ci-steps
@@ -51,9 +51,9 @@ spec:
             default: ''
           - name: DOCKERFILE
             default: Dockerfile
-          # Create git secret token and apply it to your cluster under the runtime namespace 
+          # Create git secret token and apply it to your cluster under the runtime namespace
           # NOTE: The token should be in base64 format
-          # https://kubernetes.io/docs/concepts/configuration/secret/ 
+          # https://kubernetes.io/docs/concepts/configuration/secret/
           # Create github.secret.yaml with the following content:
           #   apiVersion: v1
           #   kind: Secret
@@ -70,7 +70,7 @@ spec:
       dag:
         tasks:
           # https://github.com/codefresh-io/argo-hub/blob/main/workflows/kaniko/versions/0.0.1/docs/build.md
-          # https://codefresh.io/argohub/workflow-template/kaniko 
+          # https://codefresh.io/argohub/workflow-template/kaniko
           - name: build-docker-image
             templateRef:
               name: argo-hub.kaniko.0.0.1
@@ -102,7 +102,7 @@ spec:
                 - name: IMAGE
                   value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
                 - name: CF_API_KEY
-                  value: codefresh-token # this secret is created as part of the runtime installation 
+                  value: codefresh-token # this secret is created as part of the runtime installation
                 - name: GIT_REVISION
                   value: '{{ inputs.parameters.GIT_REVISION }}'
                 - name: GIT_BRANCH
@@ -111,10 +111,10 @@ spec:
                   value: '{{ inputs.parameters.GIT_COMMIT_URL }}'
                 - name: GIT_COMMIT_MESSAGE
                   value: '{{ inputs.parameters.GIT_COMMIT_MESSAGE }}'
-                # Create registry-creds secret and apply it to your cluster under the runtime namespace 
+                # Create registry-creds secret and apply it to your cluster under the runtime namespace
                 # You can use also use other creds such gcr/aws; please look at the template inputs for more info  https://github.com/codefresh-io/argo-hub/blob/main/workflows/codefresh-csdp/versions/0.0.6/docs/report-image-info.md
-                # Note that the token uses base64 
-                # https://kubernetes.io/docs/concepts/configuration/secret/ 
+                # Note that the token uses base64
+                # https://kubernetes.io/docs/concepts/configuration/secret/
                 # Create registry-creds.yaml with the following content:
                 #   apiVersion: v1
                 #   kind: Secret
@@ -124,7 +124,7 @@ spec:
                 #   data:
                 #     username: <REGISTRY_USERNAME base64 here>
                 #     password: <REGISTRY_PASSWORD base64 here>
-                #     domain: <REGISTRY_DOMAIN base64 here> 
+                #     domain: <REGISTRY_DOMAIN base64 here>
                 # Run kubectl -n <namespace> apply -f <registry-creds name>.yaml
                 - name: USERNAME
                   value: dockerquay-creds  # the name of the registry-creds secret you created
@@ -132,14 +132,16 @@ spec:
                   value: dockerquay-creds
                 - name: DOMAIN
                   value: dockerquay-creds
+            depends: build-docker-image
           - name: test-image
             template: test
             arguments:
               parameters:
                 - name: IMAGE
                   value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
+            depends: report-image-info
 
-    # Test template  
+    # Test template
     - name: test
       inputs:
         parameters:
@@ -147,4 +149,5 @@ spec:
       container:
         image: '{{ inputs.parameters.IMAGE }}'
         command: [sh, -c]
-        args: ["ls"]        
+        args: ["ls"]
+
