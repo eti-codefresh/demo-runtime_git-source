@@ -33,17 +33,7 @@ spec:
           path: config.json
         secretName: docker-registry # this is the name of the docker-registry secret you created 
   entrypoint: ci-steps
-  templates:
-  # Test template  
-    - name: test
-      inputs:
-        parameters:   
-        - name: IMAGE
-      container:
-        image: '{{ inputs.parameters.IMAGE }}'
-        command: [sh, -c]
-        args: ["ls"]
-      
+  templates:      
     - name: ci-steps
       inputs:
         parameters:
@@ -149,4 +139,12 @@ spec:
               - name: IMAGE
                 value: '{{ inputs.parameters.IMAGE_NAME }}:{{ inputs.parameters.TAG }}'
             template: test
-        
+      # Test template  
+    - name: test
+      inputs:
+        parameters:   
+        - name: IMAGE
+      container:
+        image: '{{ inputs.parameters.IMAGE }}'
+        command: [sh, -c]
+        args: ["ls"]        
