@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: eti123
+spec:
+  eventBusName: codefresh-eventbus
+  service:
+    ports:
+      - port: 80
+  template:
+    serviceAccountName: argo-server
+  github:
+    github-1a1d049e-b318-4dd4-b67c-2ab408d62035:
+      events:
+        - push
+      repositories:
+        - owner: eti-codefresh
+          names:
+            - pipeline-flow-demo
+      webhook:
+        port: '80'
+        method: POST
+        endpoint: /webhooks/eti123/github-1a1d049e-b318-4dd4-b67c-2ab408d62035
+        url: https://eti.pipeline-team.cf-cd.com
+      active: true
+      insecure: false
+      contentType: json
+      apiToken:
+        name: autopilot-secret
+        key: git_token

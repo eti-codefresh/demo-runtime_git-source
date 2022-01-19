@@ -34,3 +34,10 @@ spec:
                 port:
                   number: 80
             pathType: ImplementationSpecific
+          - path: /webhooks/eti123
+            backend:
+              service:
+                name: eti123-eventsource-svc
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
