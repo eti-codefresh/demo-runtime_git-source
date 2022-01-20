@@ -37,13 +37,13 @@ spec:
                 arguments:
                   parameters:
                     - name: REPO
-                      value: https://github.com/codefresh-io/cli-v2
+                      value: https://github.com/codefresh-io/cli
                     - name: IMAGE_NAME
                       value: 'quay.io/eti_zaguri/test'
 #                     - name: TAG
 #                       value: ''
-#                     - name: GIT_REVISION
-#                       value: ''
+                    - name: GIT_REVISION
+                      value: master
 #                     - name: GIT_BRANCH
 #                       value: ''
 #                     - name: GIT_COMMIT_URL
