@@ -41,3 +41,10 @@ spec:
                 port:
                   number: 80
             pathType: ImplementationSpecific
+          - path: /webhooks/nima
+            backend:
+              service:
+                name: nima-eventsource-svc
+                port:
+                  number: 80
+            pathType: ImplementationSpecific
