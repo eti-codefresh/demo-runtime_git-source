@@ -14,7 +14,7 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: docker-registry # this is the name of the docker-registry secret you created
+        secretName: '{{ inputs.parameters.IMAGE_TAG }}' # this is the name of the docker-registry secret you created
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
