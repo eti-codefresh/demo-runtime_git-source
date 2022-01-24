@@ -36,11 +36,11 @@ spec:
               spec:
                 arguments:
                   parameters:
-                    - name: REPO
+                    - name: GIT_REPO_URL
                       value: https://github.com/codefresh-io/cli
                     - name: IMAGE_NAME
                       value: 'quay.io/eti_zaguri/test'
-#                     - name: TAG
+#                     - name: IMAGE_TAG
 #                       value: ''
                     - name: GIT_REVISION
                       value: master
