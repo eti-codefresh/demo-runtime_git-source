@@ -6,15 +6,13 @@ kind: WorkflowTemplate
 metadata:
   name: ci-simple
 spec:
-  # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
-  # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
   volumes:
     - name: docker-config
       secret:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: '{{ inputs.parameters.DOCKER_REGISTRY }}' # this is the name of the docker-registry secret you created
+        secretName: '{{ inputs.parameters.DOCKER_REGISTRY }}'
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
@@ -51,6 +49,8 @@ spec:
           # --dry-run=client --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
           - name: REGISTRY_CREDS
             default: registry-creds  # the name of the registry-creds secret you created
+          # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
+          # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
           - name: DOCKER_REGISTRY
             default: docker-registry  # the name of the registry-creds secret you created
       dag:
