@@ -52,7 +52,7 @@ spec:
           # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
           # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
           - name: DOCKER_REGISTRY
-            default: docker-registry  # the name of the registry-creds secret you created
+            default: docker-config  # the name of the registry-creds secret you created
       dag:
         tasks:
           # https://codefresh.io/argohub/workflow-template/kaniko
