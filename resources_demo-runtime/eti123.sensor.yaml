@@ -52,8 +52,8 @@ spec:
 #                       value: ''
 #                     - name: DOCKERFILE
 #                       value: ''
-#                     - name: GIT_TOKEN_SECRET
-#                       value: ''
+                    - name: DOCKER_REGISTRY
+                      value: docker-registry
                 workflowTemplateRef:
                   name: ci-simple
           parameters: []
