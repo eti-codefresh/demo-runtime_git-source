@@ -12,7 +12,7 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: '{{ inputs.parameters.DOCKER_REGISTRY }}'
+        secretName: '{{ inputs.parameters.DOCKER_CONFIG }}'
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
