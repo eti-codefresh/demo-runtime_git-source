@@ -52,7 +52,7 @@ spec:
           - name: REGISTRY_CREDS
             default: registry-creds  # the name of the registry-creds secret you created
           - name: DOCKER_REGISTRY
-            default: registry-creds  # the name of the registry-creds secret you created
+            default: docker-registry  # the name of the registry-creds secret you created
       dag:
         tasks:
           # https://codefresh.io/argohub/workflow-template/kaniko
