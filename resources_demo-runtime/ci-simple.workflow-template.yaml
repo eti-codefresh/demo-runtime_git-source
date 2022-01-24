@@ -14,7 +14,7 @@ spec:
         items:
           - key: .dockerconfigjson
             path: config.json
-        secretName: '{{ inputs.parameters.IMAGE_TAG }}' # this is the name of the docker-registry secret you created
+        secretName: '{{ inputs.parameters.DOCKER_REGISTRY }}' # this is the name of the docker-registry secret you created
   entrypoint: ci-tasks
   templates:
     - name: ci-tasks
@@ -50,6 +50,8 @@ spec:
           # --from-literal=domain=$DOMAIN \
           # --dry-run=client --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
           - name: REGISTRY_CREDS
+            default: registry-creds  # the name of the registry-creds secret you created
+          - name: DOCKER_REGISTRY
             default: registry-creds  # the name of the registry-creds secret you created
       dag:
         tasks:
