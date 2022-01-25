@@ -48,7 +48,7 @@ spec:
           # --from-literal=domain=$DOMAIN \
           # --dry-run=client --save-config -o yaml | kubectl apply -f - -n $NAMESPACE
           - name: REGISTRY_CREDS
-            default: registry-creds  # the name of the registry-creds secret you created
+            default: registry-cred  # the name of the registry-creds secret you created
           # Create a docker-registry secret with your docker credentials and apply it to your cluster under the runtime namespace
           # https://jamesdefabia.github.io/docs/user-guide/kubectl/kubectl_create_secret_docker-registry/
           - name: DOCKER_CONFIG
