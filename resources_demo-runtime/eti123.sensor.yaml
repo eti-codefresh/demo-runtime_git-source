@@ -52,7 +52,7 @@ spec:
 #                       value: ''
 #                     - name: DOCKERFILE
 #                       value: ''
-                    - name: DOCKER_CONFIG
+                    - name: DOCKER_CONFIG_SECRET
                       value: docker-registry
                 workflowTemplateRef:
                   name: ci-simple
